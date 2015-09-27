@@ -1,2 +1,2 @@
-# trainspottin.hithub.io
+# trainspottin.github.io
 This is a Homework
