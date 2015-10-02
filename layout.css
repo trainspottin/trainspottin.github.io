@@ -1,12 +1,14 @@
 
-/*for debug*/
+/*for debug*
 div{
   border-style: dashed;
   border-width: 1px;
 }
+* end debug */
 
 .layout_head{
   background-color: #3b5998;
+  min-height: 50px;
 }
 
 .layout_left{
@@ -18,6 +20,7 @@ div{
 .layout_main{
   float: left;
   width: 100%;
+  min-height: 400px;
   margin-right: -500px;
   margin-left: 5px;
 }
