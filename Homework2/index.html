@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- initialize --!>
+    <link rel="stylesheet" href="reset.css" />
+    <!-- Customized --!>
+    <link rel="stylesheet" href="layout.css" />
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- vendor --!>
+    <script src="vendor/mustache.min.js" ></script>
+    <script src="vendor/jquery-1.11.3.min.js" ></script>
+    <script src="vendor/lodash.min.js" ></script>
+    <script src="vendor/backbone-min.js" ></script>
+
+    <script src="model/todo.js" ></script>
+    <script src="collection/todos.js" ></script>
+    <script src="view/app.js" ></script>
+    <script src="view/item.js" ></script>
+    <script src="route.js" ></script>
+    <script src="app.js" ></script>
+  </head>
+
+<body>
+
+<div class="layout_head header-style-title">Head
+  <div class="header-tabmenu">
+    <ul class="tabmenu">
+      <li ><a href="#">Home</a></li>
+      <li><span>Admin</span>
+        <ul>
+          <li><a href="#">User Account</a></li>
+          <li><a href="#">Group Account</a></li>
+          <li><a href="#">Group Mapping</a></li>
+          <li><a href="#">Resource Setting</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Salary</a></li>
+      <li><span class="menu-toggled">Bank</span>
+        <ul>
+          <li><a href="#">BankID</a></li>
+          <li><a href="#">Currency</a></li>
+          <li><a href="#">Accounts</a></li>
+          <li><a class="menu-toggled" href="/Homework2/index.html">Transaction</a></li>
+        </ul>
+      </li>
+      <li><span>Invest</span>
+        <ul>
+          <li><a href="#">Gold</a></li>
+          <li><a href="#">Stock</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+</div>
+
+<div class="layout_main">Main<br>
+  <table>
+      <thead style="background-color:#70B8FF">
+        <tr>
+          <th><input id="chk_auto" type="checkbox" onclick="tablehead_column_type(getEventTarget().parentNode);"/></th><th>_ID</th><th>Date</th><th>Type</th><th>Total Earning</th><th>Total Deduction</th><th>Actual Payment</th><th>Account</th><th>Comment</th><th>Attachments</th>
+        </tr>
+        <tr title="column_type" style="display:none">
+          <th>control</th><th>integer</th><th>date</th><th>select<span><%=request.getAttribute("SALARY_TYPE") %></span></th><th>integer</th><th>integer</th><th>integer</th><th>integer</th><th>text</th><th>files</th>
+                                    </tr>
+      </thead>
+      <tbody>
+      </tbody>
+      <tfoot></tfoot>
+  </table>
+</div>
+
+
+<div class="layout_foot">Foot</div>
+
+
+
+
+</body>
+</html>
+</html>
