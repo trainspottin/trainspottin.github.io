@@ -14,20 +14,23 @@
     <script src="vendor/lodash.min.js" ></script>
     <script src="vendor/backbone-min.js" ></script>
 
-    <script src="model/todo.js" ></script>
-    <script src="collection/todos.js" ></script>
+    <!-- my model --!>
+    <script src="model/record.js"></script>
+    <script src="collection/records.js"></script>
+
+
     <script src="view/app.js" ></script>
-    <script src="view/item.js" ></script>
+    <script src="view/record.js" ></script>
     <script src="route.js" ></script>
     <script src="app.js" ></script>
   </head>
 
 <body>
 
-<div class="layout_head header-style-title">Head
+<div class="layout_head header-style-title">Todo App
   <div class="header-tabmenu">
     <ul class="tabmenu">
-      <li ><a href="#">Home</a></li>
+      <li ><a href="/">Home</a></li>
       <li><span>Admin</span>
         <ul>
           <li><a href="#">User Account</a></li>
@@ -66,10 +69,20 @@
           <th>control</th><th>integer</th><th>date</th><th>select<span><%=request.getAttribute("SALARY_TYPE") %></span></th><th>integer</th><th>integer</th><th>integer</th><th>integer</th><th>text</th><th>files</th>
                                     </tr>
       </thead>
-      <tbody>
+      <tbody id="tbody">
+        
+        <script id="record-tmpl" type="text/template">a
+          {{#records}}
+          <tr>  <td>{{id}}</td><td>{{createDate}}</td><td>{{title}}</td><td>{{type}}</td><td>{{tags}}</td><td>{{from}}</td> <td>{{to}}</td><td>{{total}}</td><td>{{detail}}</td><td>{{issueDate}}</td><td>{{paidDate}}</td><td>{{attachments}}</td></tr>
+          {{/#records}}
+        </script>
+        
       </tbody>
       <tfoot></tfoot>
   </table>
+
+  <div id="record-app"></div>
+
 </div>
 
 
