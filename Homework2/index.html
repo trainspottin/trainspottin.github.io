@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8" />
+    <title>My Bank</title>
     <!-- initialize --!>
     <link rel="stylesheet" href="reset.css" />
     <!-- Customized --!>
@@ -10,24 +11,24 @@
 
     <!-- vendor --!>
     <script src="vendor/mustache.min.js" ></script>
-    <script src="vendor/jquery-1.11.3.min.js" ></script>
+    <script src="vendor/jquery-1.10.2.min.js" ></script>
     <script src="vendor/lodash.min.js" ></script>
-    <script src="vendor/backbone-min.js" ></script>
+    <script src="vendor/backbone.js" ></script>
 
     <!-- my model --!>
+    <script src="app.js" ></script>
     <script src="model/record.js"></script>
     <script src="collection/records.js"></script>
 
 
-    <script src="view/app.js" ></script>
+    <script src="view/ctrl.js" ></script>
     <script src="view/record.js" ></script>
     <script src="route.js" ></script>
-    <script src="app.js" ></script>
   </head>
 
 <body>
 
-<div class="layout_head header-style-title">Todo App
+<div class="layout_head header-style-title">Personal Financial System
   <div class="header-tabmenu">
     <ul class="tabmenu">
       <li ><a href="/">Home</a></li>
@@ -59,7 +60,10 @@
 
 </div>
 
-<div class="layout_main">Main<br>
+<div class="layout_main">
+
+  <div id="record-app">i</div>
+
   <table>
       <thead style="background-color:#70B8FF">
         <tr>
@@ -69,28 +73,38 @@
           <th>control</th><th>integer</th><th>date</th><th>select<span><%=request.getAttribute("SALARY_TYPE") %></span></th><th>integer</th><th>integer</th><th>integer</th><th>integer</th><th>text</th><th>files</th>
                                     </tr>
       </thead>
-      <tbody id="tbody">
+      <tbody id="record-item">
         
-        <script id="record-tmpl" type="text/template">a
-          {{#records}}
-          <tr>  <td>{{id}}</td><td>{{createDate}}</td><td>{{title}}</td><td>{{type}}</td><td>{{tags}}</td><td>{{from}}</td> <td>{{to}}</td><td>{{total}}</td><td>{{detail}}</td><td>{{issueDate}}</td><td>{{paidDate}}</td><td>{{attachments}}</td></tr>
-          {{/#records}}
-        </script>
         
       </tbody>
       <tfoot></tfoot>
   </table>
 
-  <div id="record-app"></div>
 
 </div>
 
+<!-- Template -->
+<script id="ctrl-tmpl" type = text/template">
+  <a href="#new">+</a>
+</script>
+<script id="record-tmpl" type="text/template">
+  {{#records}}
+  <tr>  
+    <td>{{id}}</td><td>{{createDate}}</td><td>{{title}}</td><td>{{type}}</td><td>{{tags}}</td><td>{{from}}</td> <td>{{to}}</td><td>{{total}}</td><td>{{detail}}</td><td>{{issueDate}}</td><td>{{paidDate}}</td><td>{{attachments}}</td>
+  </tr>
+  {{/#records}}
+</script>
+
+<!-- Template -->
 
 <div class="layout_foot">Foot</div>
 
-
-
+<script>
+  window.onload = function() {
+    // bootstrap
+    app.init();
+  }
+</script> 
 
 </body>
-</html>
 </html>

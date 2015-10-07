@@ -7,8 +7,8 @@ app.views.menu = Backbone.View.extend({
     console.log("menu: <init");
   },
   render: function(){
-    console.log("render...");
-    this.$el.html(this.tmeplate({}));
+    console.log("render..."+ this.template({}));
+    this.$el.html(this.template({}));
   }
 });
 

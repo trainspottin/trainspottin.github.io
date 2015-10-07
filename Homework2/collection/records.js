@@ -1,5 +1,5 @@
 
-var RecordList = Backbone.Collection.extend({
+app.collections.Records = Backbone.Collection.extend({
   initialize: function() { 
    this.add( {title:"Learn Java script"} );
    this.add( {title:"Go to backbonejs.org"} );
@@ -21,4 +21,3 @@ var RecordList = Backbone.Collection.extend({
 });
 
 
-var records = new RecordList();

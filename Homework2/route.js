@@ -1,21 +1,16 @@
 var AppRoute = Backbone.Router.extend({
-
   routes: {
-    "": "defaults",
+    "": "default",
     "item/:id": "item"
   },
-
-  defaults: function () {
+  default: function() {
     itemView.disable();
     appView.enable();
     appView.render();
   },
-
-  item: function (id) {
-    var item = appView.todos.get(id);
+  item: function(id) {
     appView.disable();
     itemView.enable();
-    itemView.render(item);
+    itemView.render();
   }
-
 });
