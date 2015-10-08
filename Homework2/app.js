@@ -8,9 +8,9 @@ var app = (function(){
     records: null,
     init: function() {
       console.log("app: >init");
+      this.records = new api.collections.Records();
       ViewsFactory.ctrl();
       ViewsFactory.list().render();
-      this.records = new api.collections.Records();
       Backbone.history.start();
       console.log("app: <init");
       return this;
@@ -27,6 +27,7 @@ var app = (function(){
     list: function(){
       if(!this.listView) {
         this.listView = new api.views.list({
+          el: "#record-item",
           model: api.records
         });
       }

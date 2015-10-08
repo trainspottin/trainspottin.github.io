@@ -77,6 +77,21 @@ ul.tabmenu li span.menu-toggled{background:#3385D6; color:#fff}
 ul.tabmenu li a.menu-toggled{background:#3385D6; color:#000}
 
 
+/* CSS Table */
+
+table {
+  font-family:'lucida grande', tahoma, verdana, arial, sans-serif;
+  border: 1px solid #CDCDCD;
+  border-spacing: 0px;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+table tr td {
+  border: 1px solid #CDCDCD;
+  padding: 4px;
+}
+
 
 
 

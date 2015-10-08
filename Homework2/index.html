@@ -63,15 +63,12 @@
 <div class="layout_main">
 
   <div id="record-app">i</div>
-
-  <table>
+  <span>AAA</span>
+  <table id="user_main_table" style="margin-left:50px">
       <thead style="background-color:#70B8FF">
         <tr>
-          <th><input id="chk_auto" type="checkbox" onclick="tablehead_column_type(getEventTarget().parentNode);"/></th><th>_ID</th><th>Date</th><th>Type</th><th>Total Earning</th><th>Total Deduction</th><th>Actual Payment</th><th>Account</th><th>Comment</th><th>Attachments</th>
+          <th><input type="checkbox"/></th><th>_ID</th><th>Date</th><th>Title</th><th>Type</th><th>Tags</th><th>From</th><th>To</th><th>Total</th><th>Detail</th><th>Attachments</th><th>_IssueDate</th><th>_PaidDate</th>
         </tr>
-        <tr title="column_type" style="display:none">
-          <th>control</th><th>integer</th><th>date</th><th>select<span><%=request.getAttribute("SALARY_TYPE") %></span></th><th>integer</th><th>integer</th><th>integer</th><th>integer</th><th>text</th><th>files</th>
-                                    </tr>
       </thead>
       <tbody id="record-item">
         
@@ -89,20 +86,221 @@
   <a href="#new">+</a>
 </script>
 <script id="record-tmpl" type="text/template">
-  {{#records}}
-  <tr>  
+  <tr> <td>ctrl</td> 
     <td>{{id}}</td><td>{{createDate}}</td><td>{{title}}</td><td>{{type}}</td><td>{{tags}}</td><td>{{from}}</td> <td>{{to}}</td><td>{{total}}</td><td>{{detail}}</td><td>{{issueDate}}</td><td>{{paidDate}}</td><td>{{attachments}}</td>
   </tr>
-  {{/#records}}
 </script>
 
 <!-- Template -->
+<script type="text/javascript">
+
+function TableEditor_CreateCheckButton()
+{
+	var jinput = $("<input type='checkbox' title='Update Row' />");
+	return jinput[0];
+}
+
+function ___calculate_table_min_bound(scn_top, scn_btm, table_top, table_btm)
+{
+	var min_bound = [];
+	// case 1. whole table is above screen. (invisible)
+	if(table_btm<=scn_top)
+	{
+		min_bound[0] = scn_top -1;
+		min_bound[1] = scn_top -1;
+		return min_bound;
+	}
+	// case 2. whole table is under screen. (invisible)
+	if(table_top>=scn_btm)
+	{
+		min_bound[0] = scn_btm +1;
+		min_bound[1] = scn_btm +1;
+		return min_bound;
+	}
+	
+	// case 3. visible
+	min_bound[0] = Math.max(scn_top, table_top);
+	min_bound[1] = Math.min(scn_btm, table_btm);
+
+	return min_bound;
+}
+function ___calcaulate_scrollbar_top(table_top, table_btm, bar_height)
+{
+	// var avg = (top+btm)/2;
+	// var pos = avg - (bar/2);
+	return Math.floor( (table_top+table_btm-bar_height)/2 );
+}
+
+function ___get_scrollbar_screen_relative_pos(scn_top, scn_height, table_top, table_height, bar_height)
+{
+	var pos = 0;
+	var min_bound = ___calculate_table_min_bound(scn_top, scn_top+scn_height, table_top, table_top+table_height);
+	
+	//case 1. whole table is above screen. (invisible)
+	//case 2. whole table is under screen. (invisible)
+	if( (min_bound[1]<scn_top) || (min_bound[0]>scn_top+scn_height) )
+	{
+		pos = ___calcaulate_scrollbar_top(table_top,table_top+table_height,bar_height);
+		return pos - scn_top;
+	}
+	pos = ___calcaulate_scrollbar_top(min_bound[0], min_bound[1], bar_height);
+	return pos - scn_top;
+}
+
+function ___toolbar_auto_scroll_install(table, bar)
+{
+	
+	var funAdjustScrollBar = function()
+	{
+		var scn_top = $(document).scrollTop();
+		var scn_dy = window.innerHeight;
+		var tbl_top = $(table).offset().top;
+		var tbl_dy = $(table).height();
+		var bar_dy = $(bar).height();
+		
+		
+		var last = parseInt(bar.style.top);
+		var dest = ___get_scrollbar_screen_relative_pos(scn_top, scn_dy, tbl_top, tbl_dy, bar_dy);
+
+		if( Math.abs(last-dest)<1 )
+			return;
+
+		//move to dest
+		//--------------
+		var percent=.1*(dest-last);
+		if(percent>0)
+			percent=Math.ceil(percent); 
+		else
+			percent=Math.floor(percent);
+        bar.style.top=parseInt(bar.style.top)+percent+"px";
+
+        var bar_x=$(table).offset().left-$(bar).width();
+        bar.style.left=bar_x+"px";
+	};
+	
+	window.setInterval(function(){funAdjustScrollBar();}, 1);
+}
 
 
-<script>
+function ___tableeditor_control_toolbar_init(table, funRowAdd, funRowDelete, funRowSave, funFileDownload, funFileRemove, funFileUpload)
+{
+    var table_offset_left = $(table).offset().left;
+	var jbar = $("<div id='crud_toolbar' style='z-index:100;left:"+(table_offset_left-20)+"px;top:50px; position:fixed	;'>");
+	//var jbottomBtn = $("<a title='Go to bottom' href='javascript:window.scrollTo(0,document.body.scrollHeight);' ><img src='/MyWeb/icon/crud_toolbar/down2bottom.png' border='0'  vspace='5'/></a><br>");
+	var topIconData = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAXVJREFUeNpi/P//PwMlgImBQsACY+i2XmBg4+BgYGVnB2MWFpYYoHABEE/48+fPkt8/fzKA8K8fPxguVxsQcMH//zFATQWR7mLGIBrEJ94LQMW/f/0qiPKQMr579ztDpLukMYiPyxAmVL0QzTE+8saXLn1g+PTpJ8Plyx8Zwt3lwIb8x2IIE4rmnz8L4gJUjZ8//8EgIMDCwMUFVMD0neHq1acMHlZixiB5dEPggQiUtAVF6dT5p87iC3VGRkZbILUEwwCg5vR///7BDAOJxAAVg2ycANS2BBQzYCczMeEOg68fPzK8f/GC4ef37zG/fvwssPQyMgbRID5IHCSPMwwe3bjB8OXDB0hY/PhRoBPqaLznDRODSpCDMYgPEgfJg9QRjAWFhEDjA5/YGD5wcDOc+MrOwB8VSFws/AEqkk6NMr73nYmBi42ZgYOVmYEdiF/+YmJgj48y/oPFEHgg/v3zBxwLt/tmYo2FHzhigXHAcyNAgAEAwSLhCqziT+YAAAAASUVORK5CYII=";
+	var downIconData = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAX5JREFUeNrEk81Kw0AQx2fbtEljixTEQin06APk7MGz4gMoHjx5zaMEBSF+tYUoFLH0IAheFIoHkQWpRdpTRaGCIBUMNsnmw91gxJKmCj04MDsLO/NnZn+7yPM8mMRiMKFxwWah9KLSIP2hBl+sz26EBBzHadBxpLXFvKTr4bFEEcHhWQ8jhBojR6DFmm1ZykGti1lyrzf49mQSoFzvYnbO8iLvIBDZrbZxsSiArptQKPBQOumMLB4a4anTBj4lAi+KGlWCnaOmvLI8J+1X71jbCiCkvff7YA4+aHY+LMDMMg3f4xynxVAMStVbmYoprudqjm2Pp0DbU8F1fQq03Z858pcHeZiGMAViWj6FpdV56eHVAJeCcOniRzpSNsXBzen1eArEMJTa3jlOTGegafDQsgS4JwLYmQxcHV9idv4rBUJvu6HWcD6XhjdhCrIzaWiV65hEUAg95QBlZ6uCc2IcHrcrkQhDFIZECIHnTVVmCLlEQot61+jff+OnAAMA4SToMLO12EQAAAAASUVORK5CYII=";
+	
+	// create top button
+	//=====================
+	var jtopBtn = $("<input type='image' title='Go to top' />");
+	jtopBtn.attr('src', topIconData);
+	jtopBtn.click(function()
+	{
+		window.scrollTo(0,$(table).offset().top);
+	});
+	
+	var jaddBtn = $(TableEditor_CreateAddButton());
+	jaddBtn.click(function(){
+		var tr = TableEditor_CreateNewRow(table);
+		var r= true;
+		if(funRowAdd!=null)
+			r = funRowAdd(table, tr);
+		if(r==true)
+		{
+			var jtbody = $(table).find('tbody');
+			jtbody.append($(tr));
+			___tableeditor_control_checkbox_init(table, $(tr).children('td').eq(0), funRowSave, funFileDownload, funFileRemove, funFileUpload);
+			//TableEditor_RowSelect(true, table, tr, funFileDownload, funFileRemove, funFileUpload);
+			$(tr).find('td:first').find('input[type=checkbox]').click();
+		}
+	});
+	var jdelBtn = $(TableEditor_CreateDeleteButton());
+	jdelBtn.click(function(){
+		var r = true;
+		var trs = TableEditor_GetSelectedRows(table);
+		if(funRowDelete!=null)
+		{
+			r = funRowDelete(table, trs);
+		}
+		if(r==true)
+		{
+			TableEditor_DeleteRow(trs);
+		}
+	});
+	// create bottom button
+	//=====================
+	var jbottomBtn = $("<input type='image' title='Go to bottom' />");
+	jbottomBtn.attr('src', downIconData);
+	jbottomBtn.click(function()
+	{
+		window.scrollTo(0,$(table).offset().top+$(table).height()-window.innerHeight);
+	});
+	
+	jbar.append(jtopBtn);
+	jbar.append($("<br>"));
+	jbar.append(jaddBtn);
+	jbar.append($("<br>"));
+	jbar.append(jdelBtn);
+	jbar.append($("<br>"));
+	jbar.append(jbottomBtn);
+	
+	//install Auto Scroll
+	//-------------------
+	___toolbar_auto_scroll_install(table, jbar[0]);
+	return jbar[0];
+}
+
+function ___tableeditor_control_checkbox_init(table, td, funRowSave, funFileDownload, funFileRemove, funFileUpload)
+{
+	var jcontrolTD = $(td);
+	var jcontrol = jcontrolTD.find('input[type=checkbox]');
+	if(jcontrol==null||jcontrol.length==0)
+		jcontrol = $(TableEditor_CreateCheckButton());
+	jcontrolTD.append(jcontrol);
+	jcontrol.click(function(e){
+		var jchkbox = $(e.target);
+		var jtr = jchkbox;
+		var limit = 100;
+		while(jtr[0].tagName.toLowerCase()!='tr')
+		{
+			if(limit--<=0 || jtr[0].tagName.toLowerCase()=='html')
+			{
+				alert('TableEditor_install() Callback Error: Cannot find selected TR !!');
+				return;
+			}
+			jtr = jtr.parent();
+		}
+		if(jchkbox.prop("checked"))
+		{
+			TableEditor_RowSelect(jchkbox.prop("checked"), table, jtr[0], funFileDownload, funFileRemove, funFileUpload);
+		}else
+		{
+			var r = true;
+			if(funRowSave!=null)
+			{
+				r = funRowSave(table, jtr[0]);
+				if(r==false)
+				{
+					jchkbox.prop("checked", true);
+					alert('Error : Row '+jtr.index()+' update Fail !!');
+					return;
+				}
+			}
+			if(r==true)
+				TableEditor_RowSelect(jchkbox.prop("checked"), table, jtr[0], funFileDownload, funFileRemove, funFileUpload);
+		}
+	});
+	
+}
+
+</script>
+
+<script type="text/javascript">
+
   window.onload = function() {
     // bootstrap
     app.init();
+    ___tableeditor_control_checkbox_init($('#user_main_table')[0]);
   }
 </script> 
 
