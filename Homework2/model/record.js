@@ -22,5 +22,4 @@ var Record = Backbone.Model.extend({
   
 });
 
-var record = new Record();
 

@@ -1,21 +1,17 @@
-var RecordView = Backbone.View.extend({
-  el: '.record-item',
-
-  enable: function(){
-    this.$el.show();
+app.views.list = Backbone.View.extend({
+  el: '#record-item',
+  initialize: function() {
+	console.log("view.record: >initialize");
+	console.log("view.record: <initialize");  
   },
-  disable: function(){
-    this.$el.hide();
-  },
-  
   template: $('#record-tmpl').html(),
-
-  rendor: function(item) {
-    console.log(this.template, item.toJSON());
-    this.$el.html(Mustache.rendor(this.template, item.toJSON()));
+  render: function(item) {
+      console.log("view.record: >render");
+	  this.$el.html(Mustache.rendor(this.template, item.toJSON()));
+      console.log("view.record: >render");
+	  return this;
   }
 });
 
-var recordView = new RecordView();
 
 

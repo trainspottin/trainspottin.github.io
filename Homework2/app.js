@@ -9,6 +9,7 @@ var app = (function(){
     init: function() {
       console.log("app: >init");
       ViewsFactory.ctrl();
+      ViewsFactory.list().render();
       this.records = new api.collections.Records();
       Backbone.history.start();
       console.log("app: <init");
