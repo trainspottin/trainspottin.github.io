@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>My Bank</title>
+    <!-- initialize -->
+    <link rel="stylesheet" href="reset.css" />
+    <!-- Customized --!>
+    <link rel="stylesheet" href="layout.css" />
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- vendor -->
+    <script src="vendor/mustache.min.js" ></script>
+    <script src="vendor/jquery-1.10.2.min.js" ></script>
+    <script src="vendor/lodash.min.js" ></script>
+    <script src="vendor/backbone.js" ></script>
+
+    <!-- my model -->
+    <script src="app.js" ></script>
+    <script src="model/record.js"></script>
+    <script src="collection/records.js"></script>
+
+
+    <script src="view/record.js" ></script>
+    <script src="route.js" ></script>
+  </head>
+
+<body>
+
+<div class="layout_head header-style-title">Personal Financial System
+  <div class="header-tabmenu">
+    <ul class="tabmenu">
+      <li ><a href="/">Home</a></li>
+      <li><span>Admin</span>
+        <ul>
+          <li><a href="#">User Account</a></li>
+          <li><a href="#">Group Account</a></li>
+          <li><a href="#">Group Mapping</a></li>
+          <li><a href="#">Resource Setting</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Salary</a></li>
+      <li><span class="menu-toggled">Bank</span>
+        <ul>
+          <li><a href="#">BankID</a></li>
+          <li><a href="#">Currency</a></li>
+          <li><a href="#">Accounts</a></li>
+          <li><a class="menu-toggled" href="/Homework2/index.html">Transaction</a></li>
+        </ul>
+      </li>
+      <li><span>Invest</span>
+        <ul>
+          <li><a href="#">Gold</a></li>
+          <li><a href="#">Stock</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+</div>
+
+<div class="layout_main">
+<BR><BR>
+  <table id="user_main_table" style="margin-left:50px">
+      <thead style="background-color:#70B8FF">
+        <tr>
+          <th><input type="checkbox"/></th><th>_ID</th><th>Date</th><th>Title</th><th>Type</th><th>Tags</th><th>From</th><th>To</th><th>Total</th><th>Detail</th><th>Attachments</th><th>_IssueDate</th><th>_PaidDate</th>
+        </tr>
+      </thead>
+      <tbody id="record-item">
+        
+        
+      </tbody>
+      <tfoot></tfoot>
+  </table>
+
+
+</div>
+<div class="layout_foot">Foot</div>
+
+<!-- Template -->
+<script id="ctrl-tmpl" type ="text/template">
+  <a href="#new">+</a>
+</script>
+<script id="record-tmpl" type="text/template">
+  <tr> 
+    <td style="width:48px">
+      <img src="./res/edit.gif" alt="*" onclick="edit({{id}})"/><img src="./res/delete.gif" alt="-" onclick="remove1({{id}})"/><img src="./res/add.gif" alt="+" onclick="add({{id}})"/>
+    </td> 
+    <td>{{id}}</td><td>{{createDate}}</td><td>{{title}}</td><td>{{type}}</td><td>{{tags}}</td><td>{{from}}</td> <td>{{to}}</td><td>{{total}}</td><td>{{detail}}</td><td>{{issueDate}}</td><td>{{paidDate}}</td><td>{{attachments}}</td>
+  </tr>
+</script>
+
+<!-- Template -->
+
+<script type="text/javascript">
+
+  window.onload = function() {
+    // bootstrap
+    app.init();
+  };
+  
+  function edit(id){
+	  alert("edit:"+id);
+  }
+  function remove1(id){
+      alert("remove:"+id);
+  }
+  function add(id){
+      alert("add:"+id);
+  }
+</script> 
+
+</body>
+</html>

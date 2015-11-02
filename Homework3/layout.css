@@ -1,0 +1,40 @@
+
+/*for debug*
+div{
+  border-style: dashed;
+  border-width: 1px;
+}
+* end debug */
+
+.layout_head{
+  min-height: 60px;
+}
+
+.layout_main{
+  float: left;
+  width: 100%;
+  min-height: 400px;
+  margin-right: -500px;
+  margin-left: 5px;
+}
+
+.layout_left{
+  display: none;
+  float: left;
+  width: 240px;
+}
+
+.layout_right{
+  display: none;
+  float: right;
+  width: 240px;
+  margin-right: 0px;
+}
+
+.layout_foot{
+  border: 1px solid;
+  width: 100%;
+  zoom:1;
+  overflow:auto;
+}
+

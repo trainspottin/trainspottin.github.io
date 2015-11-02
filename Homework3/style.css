@@ -1,0 +1,103 @@
+
+.header-style-title{
+  font-family:'lucida grande', tahoma, verdana, arial, sans-serif;
+  font-size: 36px;
+  text-align: center;
+  background-color: #99c2eb;
+}
+
+.sidebar-style {
+  background-color: #eceff6;
+
+}
+
+.header-tabmenu{
+  text-align: left;
+  font-size: 14px;
+}
+
+
+
+/* Set the parent <li>’s CSS position property to ‘relative’. */
+ul.tabmenu{
+  list-style:none;
+  padding:0;
+  margin:0;
+  line-height:1em;
+}
+
+ul.tabmenu > li{
+  display:block;
+  position:relative;
+  float:left;
+  background:#80B2E6;
+}
+
+/* The CSS to hide the sub menus. */
+ul.tabmenu > li > ul{display:none;}
+
+ul.tabmenu li a{
+  display:block;
+  text-decoration:none;
+  white-space:nowrap;
+  color:#444;
+  padding:0.25em 1em;
+  border-left:1px solid #fff;
+  border-top:1px solid #fff;
+  border-right:1px solid #aaa;
+}
+
+ul.tabmenu li span{
+  display:block;
+  text-decoration:none;
+  white-space:nowrap;
+  color:#004;
+  padding:0.25em 1em;
+  border-left:1px solid #fff;
+  border-top:1px solid #fff;
+  border-right:1px solid #aaa;
+}
+
+ul.tabmenu li a:hover{color:#ff4;background:#3385D6;}
+ul.tabmenu li span:hover{background:#3385D6}
+
+/* Displays the dropdown menu on hover. */
+ul.tabmenu > li:hover > ul{
+  display:block;
+  position:absolute;
+}
+
+li:hover li{float:none;}
+
+li:hover a{background:#80B2E6;}
+
+li:hover li a:hover{background:#3385D6;}
+
+ul.tabmenu li span.menu-toggled{background:#3385D6; color:#fff}
+ul.tabmenu li a.menu-toggled{background:#3385D6; color:#000}
+
+
+/* CSS Table */
+
+table {
+  font-family:'lucida grande', tahoma, verdana, arial, sans-serif;
+  border: 1px solid #CDCDCD;
+  border-spacing: 0px;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+table tr td {
+  border: 1px solid #CDCDCD;
+  padding: 4px;
+}
+
+
+input {
+  margin: 0px;
+  padding: 0px;
+}
+
+
+
+
